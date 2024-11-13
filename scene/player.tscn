@@ -1,6 +1,6 @@
-[gd_scene load_steps=29 format=3 uid="uid://djoqvr3573sdp"]
+[gd_scene load_steps=30 format=3 uid="uid://djoqvr3573sdp"]
 
-[ext_resource type="Texture2D" uid="uid://dce4i2egyg0n7" path="res://Village/AnimationSheet_Character.png" id="1_fxk4w"]
+[ext_resource type="Texture2D" uid="uid://dce4i2egyg0n7" path="res://assets/AnimationSheet_Character.png" id="1_fxk4w"]
 [ext_resource type="Script" path="res://Script/player.gd" id="1_mrt3l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_65kq5"]
@@ -195,8 +195,11 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ebwqh"]
-radius = 4.0
-height = 22.0
+radius = 7.0
+height = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wi6mu"]
+radius = 18.0278
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_mrt3l")
@@ -207,8 +210,17 @@ animation = &"walk_right"
 frame_progress = 0.721431
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(0, 8)
 shape = SubResource("CapsuleShape2D_ebwqh")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3, 3)
+
+[node name="detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection"]
+position = Vector2(-1, 2)
+shape = SubResource("CircleShape2D_wi6mu")
+
+[connection signal="body_entered" from="detection" to="." method="_on_detection_body_entered"]
+[connection signal="body_exited" from="detection" to="." method="_on_detection_body_exited"]
